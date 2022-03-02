@@ -1,0 +1,104 @@
+<div class="row">
+	<div>	
+
+		<div class="panel panel-info">
+					<!-- Default panel contents -->
+					<div class="panel-heading">Account summary</div>
+					<!-- Table -->
+					<table class="table table-striped">
+					  <tr>
+						  <td >Address:</td><td ng-bind="account.Account"></td>
+					  </tr>
+					  <tr>
+							<td >XAG balance:</td><td ng-bind="account.Balance/1000000"></td>
+					  </tr>
+					  <tr>
+							<td >Owner Count:</td><td ng-bind="account.OwnerCount"></td>
+					  </tr>
+					  <tr>
+							<td >Frozen XAG:</td><td ng-bind="20 + account.OwnerCount*5"></td>
+					  </tr>
+					</table>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div>
+
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+				  <li role="presentation" class="active"><a data-target="#Payments" aria-controls="Payments" role="tab" data-toggle="tab">Payments</a></li>
+				  <li role="presentation" ><a data-target="#Balances" aria-controls="Balances" role="tab" data-toggle="tab">Balances</a></li>
+				  
+				</ul>
+			  
+				<!-- Tab panes -->
+				<div class="tab-content">
+				  <div role="tabpanel" class="tab-pane " id="Balances">
+						<div class="panel panel-info">
+								<!-- Default panel contents -->
+								<div class="panel-heading"></div>
+								<!-- Table -->
+								<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>Amount</th>
+												<th>Currency</th>
+												<th>Counterparty</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="line in trustlines">
+												<td >{{line.balance}}</td>
+												<td >{{line.currency}}</td>
+												<td ng-bind="line.account"></td>
+											</tr>
+										
+										</tbody>
+								</table>
+						</div>
+				  </div>
+				  <div role="tabpanel" class="tab-pane active" id="Payments">
+						<div class="panel panel-info">
+								<!-- Default panel contents -->
+								<div class="panel-heading"></div>
+								<!-- Table -->
+								<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>Hash</th>
+												<th>Date</th>
+												<th>Account</th>
+												<th></th>
+												<th>Destination</th>
+												<th>Tag</th>
+												<th>Delivered Amount</th>
+												<th>Payment Result</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="payment in payments" ng-class="{true: 'success', false: 'warning'}[payment.result=='tesSUCCESS']">
+												<td><a class="btn btn-info btn-sm" ng-click="goToWithParams('/tx',payment.hash)">Detail</a></td>
+												<td ng-bind="payment.date"></td>
+												<td ng-bind="payment.Account"></td>
+												<td ng-bind="payment.inout"  ng-class="{true: 'text-info', false: 'text-warning'}[payment.inout=='IN']" ></td>
+												<td ng-bind="payment.Destination"></td>
+												<td ng-bind="payment.DestinationTag"></td>
+												<td>{{payment.delivered_amount}}  <span class="text-info">{{payment.currency}}</span></td>
+												<td ng-bind="payment.result" ng-class="{true: 'text-success', false: 'text-danger'}[payment.result=='tesSUCCESS']"></td>
+											</tr>
+										
+										</tbody>
+								</table>
+								<div class="panel-footer">
+										<button type="button" ng-click="loadMore(marker)" ng-show="marker" class="btn btn-primary">Load More</button>
+								</div>
+						</div>
+				  </div>
+				  
+				  
+				</div>
+				
+	
+	</div>
+</div>

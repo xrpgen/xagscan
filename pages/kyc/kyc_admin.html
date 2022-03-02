@@ -1,0 +1,241 @@
+<div class="container-fluid" style="font-size:10px;padding-left:1px;padding-right: 1px">
+<!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">KYC List</h3>
+    
+                  <div class="box-tools">
+                    <div class="input-group input-group-sm" >
+                      <div class="input-group-btn">
+                          <button  data-toggle="modal" data-target="#modal-kyc-submit"  type="button" class="btn btn-success ">添加</button>
+                      </div>
+                      <input ng-model="condition" type="text" name="table_search" class="form-control pull-right" placeholder="过滤">
+                      <div class="input-group-btn ">
+                          <button type="button" class="btn btn-primary" ng-click="condition2.status='';condition2.gender=''">全部<span class="badge">{{count.all}}</span></button>
+                          <button ng-disabled="count.wait==0" type="button" class="btn btn-info" ng-click="condition2.status=0">?<span class="badge">{{count.wait}}</span></button>
+                          <button ng-disabled="count.reject==0" type="button" class="btn btn-danger" ng-click="condition2.status=2">×<span class="badge">{{count.reject}}</span></button>
+                          <button ng-disabled="count.pass==0" type="button" class="btn btn-success" ng-click="condition2.status=1">√<span class="badge">{{count.pass}}</span></button>
+                      </div>
+                      <!--<div class="input-group-btn">
+                          <button type="button" class="btn btn-info" ng-click="condition2.gender=0">男</button>
+                          <button type="button" class="btn btn-info" ng-click="condition2.gender=1">女</button>
+                      </div>-->
+                      
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                  <table class="table table-hover">
+                    <tr>
+                        <th>审核状态</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>出生日期</th>
+                        <th>地址</th>
+                        <th>证件类型</th>
+                        <th>证件号码</th>
+                        <!-- <th>ETH钱包</th> -->
+                        <th>XLM钱包</th>
+                        <th>XRP钱包</th>
+                        <th>审核备注</th>
+                        <th>提交日期</th>
+                        <th>#</th>
+                    </tr>
+                    <tr ng-repeat="kyc in kycList | filter:condition | filter:condition2 | orderBy:col ">
+                        <td><span ng-class="{'label-success':kyc.status==1,'label-danger':kyc.status==2,'label-warning':kyc.status==0}" class="label" ng-bind="kyc.status | fStatus | translate"></span></td>
+                        <td ng-bind="kyc.name"></td>
+                        <td ng-bind="kyc.gender | FGender | translate"></td>
+                        <td ng-bind="kyc.birth_date"></td>
+                        <td ng-bind="kyc.address"></td>
+                        <td ng-bind="kyc.id_card_type"></td>
+                        <td ng-bind="kyc.id_card"></td>
+                       <!--  <td ng-bind="kyc.eth_pubkey"></td> -->
+                        <td ng-bind="kyc.xlm_pubkey"></td>
+                        <td ng-bind="kyc.xrp_pubkey"></td>
+                        <td ng-bind="kyc.remark"></td>
+                        <td ng-bind="kyc.create_date"></td>
+                        <td>
+
+                          <div class="btn-group">
+                                <button ng-click="setKyc(kyc)" data-toggle="modal" data-target="#modal-kyc"  type="button" class="btn btn-success" style="font-size:10px">审核</button>
+                          </div>
+                        </td>
+                      </tr>
+                  </table>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+          </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <div class="modal modal-info fade" id="modal-kyc">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{{curr_kyc.name}} | {{curr_kyc.id_card}} | {{curr_kyc.birth_date}} | {{curr_kyc.id_card}} || {{curr_kyc.status | fStatus | translate}}</h4>
+              
+              <div class="input-group margin">
+                  <input ng-model="curr_kyc.remark" type="text" class="form-control" placeholder="拒绝原因">
+                  <span class="input-group-btn">
+                      <button ng-disabled="!curr_kyc.remark || curr_kyc.status!=0" type="button" class="btn btn-danger btn-flat" ng-click="reject(curr_kyc)">拒绝</button>
+                      <button ng-disabled="curr_kyc.status!=0"  type="button" class="btn btn-success btn-flat" ng-click="approve(curr_kyc)">通过</button>
+                  </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row margin-bottom">
+                    <!-- /.col -->
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-sm-6">
+                              <img class="img-responsive" src="{{curr_kyc.id_card_photo_front}}" alt="Photo">
+                        </div>
+                        <div class="col-sm-6">
+                            <img class="img-responsive" src="{{curr_kyc.id_card_photo_back}}" alt="Photo">
+                      </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-8">
+                                <img class="img-responsive" src="{{curr_kyc.id_card_photo_text}}" alt="Photo">
+                          </div>
+                        </div>
+                      <!-- /.row -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+               
+            </div>
+
+          </div>
+          <!-- /.modal-content -->
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal modal-info fade" id="modal-kyc-submit">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row margin-bottom">
+                  <form  id="kycForm" name="kycForm" class="form-horizontal">
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.name.$invalid]" class="form-group">
+                      <label for="name" class="col-sm-3 control-label" translate="name" ></label>
+                      <div class="col-sm-8">
+                        <input  ng-maxlength="100" required name="name" ng-model="kyc.name" type="text" class="form-control" id="name" placeholder="Name">
+                      </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.gender.$invalid]" class="form-group">
+                        <label class="col-sm-3 control-label" translate="gender"></label>
+                        <div class="col-sm-4">
+                          <select name="gender" required ng-model="kyc.gender" class="form-control">
+                            <option value='0' translate="male">male</option>
+                            <option value='1'translate="female">female</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.birth_date.$invalid]" class="form-group">
+                      <label for="birthday" class="col-sm-3 control-label" translate="birthday"></label>
+    
+                      <div class="col-sm-8">
+                        <input name="birth_date" required ng-model="kyc.birth_date" type="date" class="form-control" id="birthday">
+                      </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.address.$invalid]" class="form-group">
+                      <label for="address" class="col-sm-3 control-label" translate="address"></label>
+    
+                      <div class="col-sm-8">
+                        <textarea name="address" ng-minlength="10" ng-maxlength="1000" required ng-model="kyc.address" type="text" class="form-control" id="address" placeholder="Address"></textarea>
+                      </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.id_card_type.$invalid]" class="form-group">
+                      <label for="id_card_type" class="col-sm-3 control-label" translate="card_type"></label>
+    
+                      <div class="col-sm-4">
+                        <input name="id_card_type"   ng-maxlength="64" required ng-model="kyc.id_card_type" class="form-control" id="id_card_type" placeholder="Id Card Type">
+                      </div>
+                    </div>
+
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.id_card.$invalid]" class="form-group">
+                      <label for="id_card"  class="col-sm-3 control-label" translate="card"></label>
+    
+                      <div class="col-sm-8">
+                        <input name="id_card" required ng-minlength="6" ng-maxlength="50" ng-model="kyc.id_card" type="text" class="form-control" id="id_card" placeholder="Id Card No.">
+                      </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.xlm_pubkey.$invalid]" class="form-group">
+                      <label for="xlm_pubkey" class="col-sm-3 control-label" >恒星地址</label>
+    
+                      <div class="col-sm-4">
+                        <input name="xlm_pubkey"   ng-maxlength="64"  ng-model="kyc.xlm_pubkey" class="form-control" id="xlm_pubkey" placeholder="恒星地址">
+                      </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.xlm_pubkey.$invalid]" class="form-group">
+                      <label for="xrp_pubkey" class="col-sm-3 control-label" >瑞波地址</label>
+    
+                      <div class="col-sm-4">
+                        <input name="xrp_pubkey"   ng-maxlength="64"  ng-model="kyc.xrp_pubkey" class="form-control" id="xrp_pubkey" placeholder="瑞波地址">
+                      </div>
+                    </div>
+                    <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.eth_pubkey.$invalid]" class="form-group">
+                      <label for="xlm_pubkey" class="col-sm-3 control-label" >ETH地址</label>
+    
+                      <div class="col-sm-4">
+                        <input name="eth_pubkey"   ng-maxlength="64"  ng-model="kyc.eth_pubkey" class="form-control" id="eth_pubkey" placeholder="以太坊地址">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar1" class="col-sm-3 control-label" translate="card_front"></label>
+      
+                        <div class="col-sm-8">
+                          <input name="avatar"   type="file" onchange="fileChange(this);" accept="image/jpeg,image/jpg,image/png" id="avatar1" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar2" class="col-sm-3 control-label" translate="card_back" ></label>
+      
+                        <div class="col-sm-8">
+                          <input name="avatar"   type="file" onchange="fileChange(this);" accept="image/jpeg,image/jpg,image/png" id="avatar2" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar3" class="col-sm-3 control-label" translate="card_text"></label>
+      
+                        <div class="col-sm-8">
+                          <input name="avatar"   type="file"  onchange="fileChange(this);" accept="image/jpeg,image/jpg,image/png" id="avatar3" >
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                      <div class="col-sm-offset-3 col-sm-8">
+                        <button ng-click = "submitKyc(kyc)" ng-disabled="kycForm.$invalid || kyc.status == 0 || kyc.status == 1" type="submit" class="btn btn-danger" translate="submit"></button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                    <!-- /.col -->
+                </div>
+               
+            </div>
+
+          </div>
+          <!-- /.modal-content -->
+        </div>
+    </div>
+    <!-- /.modal -->
+
+   

@@ -1,1 +1,1 @@
-# xagscan
+XAG Public Chain Explorer

@@ -1,0 +1,68 @@
+<div class="row">
+ 	<div class="col-md-8">	
+		<div class="panel panel-info">
+					<!-- Default panel contents -->
+					<div class="panel-heading">Transaction summary</div>
+					<!-- Table -->
+					<table class="table table-striped">
+						<tr>
+							<td >Hash:</td><td ng-bind="tx.hash"></td>
+						</tr>
+						<tr>
+							<td >Date:</td><td ng-bind="date"></td>
+						</tr>
+						<tr>
+							<td >Type:</td><td ng-bind="tx.TransactionType"></td>
+						</tr>
+						<tr>
+							<td >Account:</td><td ng-bind="tx.Account"></td>
+						</tr>
+						<tr>
+							<td >Destination:</td><td ng-bind="tx.Destination"></td>
+						</tr>
+						<tr>
+							<td >Tag:</td><td ng-bind="tx.DestinationTag" ></td>
+						</tr>
+						<tr>
+							<td >Amount:</td><td ng-bind="Amount" ></td>
+						</tr>
+						<tr class="success">
+							<td >Delivered Amount:</td><td ng-bind="delivered_amount" ></td>
+						</tr>
+						<tr>
+							<td >Currency:</td><td ng-bind="currency" ></td>
+						</tr>
+						<tr>
+							<td >Issuer:</td><td ng-bind="issuer" ></td>
+						<tr>
+								<td >Fee (XAG):</td><td ng-bind="tx.Fee/1000000" ></td>
+						</tr>
+						<tr class="success">
+								<td >Result:</td><td ng-bind="tx.meta.TransactionResult" ></td>
+						</tr>
+					</table>
+					<!--<div class="panel-footer"><button class="btn btn-info">Raw JSON</button> </div>-->
+		</div>
+	</div>
+	<div class="col-md-4">	
+			<div class="panel panel-info">
+						<!-- Default panel contents -->
+						<div class="panel-heading">Outcome</div>
+						<!-- Table -->
+						<table class="table table-striped">
+							<tr>
+								<td >InLedger:</td><td ng-bind="tx.inLedger"></td>
+							</tr>
+							<tr>
+								<td >Sequence:</td><td ng-bind="tx.Sequence"></td>
+							</tr>
+							<tr>
+								<td >LastLedgerSequence:</td><td ng-bind="tx.LastLedgerSequence"></td>
+							</tr>
+							<tr>
+								<td >Flags:</td><td ng-bind="tx.Flags"></td>
+							</tr>
+						</table>
+			</div>
+		</div>
+</div>

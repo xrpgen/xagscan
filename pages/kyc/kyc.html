@@ -1,0 +1,274 @@
+<div class="container">
+ <!-- Content Header (Page header) -->
+   <section class="content-header"><h1> KYC Information </h1>  </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div  class="col-md-3" >
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="img/user2-160x160.jpg" alt="User profile picture">
+
+              <h3 class="profile-username text-center" ng-bind="kyc.name"></h3>
+
+              <p class="text-muted text-center" ng-bind="kyc.gender | FGender | translate"></p>
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b translate="status">Status</b> <a class="pull-right" ><span ng-class="{true: 'label-success', false: 'label-info'}[kyc.status==1]" class="label" ng-bind="kyc.status | fStatus | translate" ></span></a>
+                </li>
+              </ul>
+
+              <button  data-toggle="modal" data-target="#modal-info" class="btn btn-info btn-block" ng-disabled="!kyc" translate="eth_addr"><b>ETH address</b></button>
+              <button  data-toggle="modal" data-target="#modal-success" class="btn btn-success btn-block" ng-disabled="!kyc" translate="xlm_addr"><b>XLM address</b></button>
+              <button  data-toggle="modal" data-target="#modal-primary" class="btn btn-primary btn-block" ng-disabled="!kyc" translate="xrp_addr"><b>XRP address</b></button>
+            
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Details</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <strong><i class="fa fa-pencil margin-r-5"></i> Birthday</strong>
+
+                <p>
+                    <p class="text-muted" ng-bind="kyc.birth_date"></p>
+                </p>
+              <hr>
+
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
+
+              <p class="text-muted" ng-bind="kyc.address"></p>
+
+              <hr>
+              <strong><i class="fa fa-user margin-r-5"></i> {{kyc.id_card_type}}</strong>
+
+              <p class="text-muted" ng-bind="kyc.id_card"></p>
+
+              <hr>
+
+              <strong><i class="fa fa-file-text-o margin-r-5"></i> {{'remark' | translate}}</strong>
+
+              <p ng-bind="kyc.remark"></p>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <form  id="kycForm" name="kycForm" class="form-horizontal">
+                <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.name.$invalid]" class="form-group">
+                  <label for="name" class="col-sm-3 control-label" translate="name" ></label>
+                  <div class="col-sm-8">
+                    <input  ng-maxlength="100" required name="name" ng-model="kyc.name" type="text" class="form-control" id="name" placeholder="Name">
+                  </div>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.gender.$invalid]" class="form-group">
+                    <label class="col-sm-3 control-label" translate="gender"></label>
+                    <div class="col-sm-4">
+                      <select name="gender" required ng-model="kyc.gender" class="form-control">
+                        <option value='0' translate="male">male</option>
+                        <option value='1'translate="female">female</option>
+                      </select>
+                    </div>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.birth_date.$invalid]" class="form-group">
+                  <label for="birthday" class="col-sm-3 control-label" translate="birthday"></label>
+
+                  <div class="col-sm-8">
+                    <input name="birth_date" required ng-model="kyc.birth_date" type="date" class="form-control" id="birthday">
+                  </div>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.address.$invalid]" class="form-group">
+                  <label for="address" class="col-sm-3 control-label" translate="address"></label>
+
+                  <div class="col-sm-8">
+                    <textarea name="address" ng-minlength="10" ng-maxlength="1000" required ng-model="kyc.address" type="text" class="form-control" id="address" placeholder="Address"></textarea>
+                  </div>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.id_card_type.$invalid]" class="form-group">
+                  <label for="id_card_type" class="col-sm-3 control-label" translate="card_type"></label>
+
+                  <div class="col-sm-4">
+                    <input name="id_card_type"   ng-maxlength="64" required ng-model="kyc.id_card_type" class="form-control" id="id_card_type" placeholder="Id Card Type">
+                  </div>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[kycForm.id_card.$invalid]" class="form-group">
+                  <label for="id_card"  class="col-sm-3 control-label" translate="card"></label>
+
+                  <div class="col-sm-8">
+                    <input name="id_card" required ng-minlength="6" ng-maxlength="50" ng-model="kyc.id_card" type="text" class="form-control" id="id_card" placeholder="Id Card No.">
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="avatar1" class="col-sm-3 control-label" translate="card_front"></label>
+  
+                    <div class="col-sm-8">
+                      <input name="avatar"  required type="file" onchange="fileChange(this);" accept="image/jpeg,image/jpg,image/png" id="avatar1" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="avatar2" class="col-sm-3 control-label" translate="card_back" ></label>
+  
+                    <div class="col-sm-8">
+                      <input name="avatar"  required type="file" onchange="fileChange(this);" accept="image/jpeg,image/jpg,image/png" id="avatar2" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="avatar3" class="col-sm-3 control-label" translate="card_text"></label>
+  
+                    <div class="col-sm-8">
+                      <input name="avatar"  required type="file"  onchange="fileChange(this);" accept="image/jpeg,image/jpg,image/png,image/bmp" id="avatar3" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-3 col-sm-8">
+                    <button ng-click = "submitKyc(kyc)" ng-disabled="kycForm.$invalid || kyc.status == 0 || kyc.status == 1" type="submit" class="btn btn-danger" translate="submit"></button>
+                  </div>
+                </div>
+              </form>
+              <div>
+                <div><h3>手持照片要求</h3></div>
+                <div>
+                  手持如下文字与身份证和本人的合影，文字内容如下：
+                  <b>“本人保证（括号内填写自己瑞波钱包或者恒星钱包地址）<br>
+                   该地址是本人所有地址，并且保证该地址的资产属于本人合法所得，本人愿意承担相应的法律责任。”<br>
+
+                   然后署名，日期</b><br>
+
+                   之后手持该说明，身份证，与自己合影一张，要求不得遮挡脸部，不可使用滤镜，身份证和文字都需要清晰。
+
+                </div>
+              </div>
+              <div>
+                <div><h2>照片例子</h2></div>
+                <div class="row margin-bottom">
+                    <!-- /.col -->
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-sm-4">
+                              <img class="img-responsive" ng-src="uploads\files\sample_front" alt="Photo">
+                        </div>
+                        <div class="col-sm-4">
+                          <img class="img-responsive" ng-src="uploads\files\sample_back" alt="Photo">
+                        </div>
+                        <div class="col-sm-4">
+                            <img class="img-responsive" ng-src="uploads\files\sample_text" alt="Photo">
+                        </div>
+                      </div>
+                      <!-- /.row -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+              </div>
+              
+        </div>
+        <!-- /.col -->
+      </div>
+      
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <div class="modal modal-warning fade" id="modal-info">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Update Your ETH address</h4>
+          </div>
+          <div class="modal-body">
+              <div class="callout callout-danger">
+                  <h4>Reminder!</h4>
+                  <p translate="reminder">You can only submit ONCE, make sure it's CORRECT and belong to your KYC</p>
+              </div>
+              <div>
+                  <form  name="ethForm"  method="post">
+                      <div class="form-group has-feedback">
+                        <input ng-model="kyc.eth_pubkey" ng-minlength="42" ng-maxlength="42" required type="text" class="form-control" placeholder="ETH Address">
+                        <span class="fa fa-fw fa-money form-control-feedback"></span>
+                      </div>
+                  </form> 
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" ng-disabled="ethForm.$invalid" ng-click="submitETHAddress(kyc)">Submit</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+      <!-- /.modal -->
+
+  <div class="modal modal-success fade" id="modal-success">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Update Your Stellar address</h4>
+            </div>
+            <div class="modal-body">
+                <div class="callout callout-danger">
+                    <h4>Reminder!</h4>
+                    <p translate="reminder">You can only submit ONCE, make sure it's CORRECT and belong to your KYC</p>
+                </div>
+                <div>
+                    <form  name="xlmForm"  method="post">
+                        <div class="form-group has-feedback">
+                          <input ng-model="kyc.xlm_pubkey" ng-minlength="34" ng-maxlength="56" required type="text" class="form-control" placeholder="XLM Or XRP Address">
+                          <span class="fa fa-fw fa-money form-control-feedback"></span>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline" ng-disabled="xlmForm.$invalid" ng-click="submitXLMAddress(kyc)">Submit</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+    </div>
+        <!-- /.modal -->
+  <div class="modal modal-primary fade" id="modal-primary">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Update Your Ripple address</h4>
+          </div>
+          <div class="modal-body">
+              <div class="callout callout-danger">
+                  <h4>Reminder!</h4>
+                  <p translate="reminder">You can only submit ONCE, make sure it's CORRECT and belong to your KYC</p>
+              </div>
+              <div>
+                  <form  name="xrpForm"  method="post">
+                      <div class="form-group has-feedback">
+                        <input ng-model="kyc.xrp_pubkey" ng-minlength="34" ng-maxlength="34" required type="text" class="form-control" placeholder="XRP Address">
+                        <span class="fa fa-fw fa-money form-control-feedback"></span>
+                      </div>
+                  </form> 
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" ng-disabled="xrpForm.$invalid" ng-click="submitXRPAddress(kyc)">Submit</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+  </div>
+        <!-- /.modal -->

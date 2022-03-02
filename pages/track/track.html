@@ -1,0 +1,40 @@
+
+<div class="container-fluid">
+<section class="content">
+  <div class="row">
+    <div class="col-md-12" style="padding-right:5px;padding-left:5px">
+      <!-- The time line -->
+      <ul class="timeline" ng-repeat='t in tracks'>
+        <!-- timeline time label -->
+        <li class="time-label">
+              <span class="bg-green" ng-bind="t.record.date"></span>
+              <span ng-bind='t.memo' style="display:none"></span>
+        </li>
+        <!-- /.timeline-label -->
+        <!-- timeline item -->
+        <li style="margin-right:2px">
+          <i class="fa fa-camera bg-purple"></i>
+
+          <div class="timeline-item" style="margin-right:1px;margin-left:55px ">
+            <span class="time"><i class="fa fa-clock-o" ></i> <span ng-bind="t.record.time"></span></span>
+
+            <h3 class="timeline-header"  >
+
+              <pre ng-bind="t.record.desc" style="overflow:visible;border:hidden;background-color:white;padding-left:2px ;" ></pre>
+            </h3>
+
+            <div class="timeline-body">
+              <img src="{{t.record.img}}"  style="width:90%" class="margin img-rounded">
+            </div>
+          </div>
+      </li>
+        <!-- END timeline item -->
+        
+      </ul>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+     </section>
+</div>
+   

@@ -98,6 +98,9 @@ myApp.controller('AccountCtrl', ['$scope', '$location', '$http','$timeout','$int
             requests++;
             console.log('account_lines', data)
             $scope.trustlines = data.response.lines;
+            $scope.trustlines.forEach(line => {
+                line.currency = fmtCode(line.currency);
+            });
             $scope.$apply();
           }).catch(error => {
             requests++;

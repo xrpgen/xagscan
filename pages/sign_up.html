@@ -1,0 +1,48 @@
+<div class="container-fluid">
+<section class="content">
+          <div  class="login-box">
+            <div class="login-logo">
+              <b translate="sign_up">Sign up</b>
+            </div>
+           
+            <div class="login-box-body">
+              <p class="login-box-msg"></p>
+          
+              <form name="signUpForm" method="post">
+                <div ng-class="{true: 'has-error', false: 'has-success'}[signUpForm.email.$dirty && signUpForm.email.$invalid]" class="form-group has-feedback">
+                  <input name="email" ng-model="user.email" required type="email" ng-maxlength="50" class="form-control" placeholder="Email">
+                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[signUpForm.passwd.$dirty && signUpForm.passwd.$invalid]" class="form-group has-feedback">
+                  <input name="passwd" ng-model="user.passwd" ng-minlength="6"  ng-maxlength="18"  required type="password" class="form-control" placeholder="Password" data-toggle="tooltip" data-placement="right" title="6 digit or alphabet">
+                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[signUpForm.passwd2.$dirty && signUpForm.passwd2.$invalid || user.passwd != user.passwd2]" class="form-group has-feedback">
+                    <input name="passwd2" ng-model="user.passwd2" ng-minlength="6"  ng-maxlength="18" required type="password" class="form-control" placeholder="Password Confirm" >
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div ng-class="{true: 'has-error', false: 'has-success'}[signUpForm.code.$dirty && signUpForm.code.$invalid]" class="form-group has-feedback input-group">
+                    <!-- /btn-group -->
+                    <input id="code" name="code" ng-model="user.code"  ng-minlength="4" ng-maxlength="4" required type="text" class="form-control" placeholder="Email Verify code">
+                    <div class="input-group-btn">
+                        <button ng-click="sendCode(user)" type="button" class="btn btn-info" ng-disabled="signUpForm.email.$invalid || user.wait" >{{user.tm | translate}}</button>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                  <!-- /.col -->
+                  <div class="col-xs-12">
+                    <button ng-click="reg(user)" ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary btn-block btn-flat" translate="sign_up">Sign up</button>
+                  </div>
+                  <!-- /.col -->
+                </div>
+              </form>        
+              
+              <a href ng-click="goTo('/login')" class="text-center" translate="have_one">I already have a membership</a>
+          
+            </div>
+            <!-- /.login-box-body -->
+          </div>
+     </section>
+</div>
+   

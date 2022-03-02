@@ -1,0 +1,30 @@
+<div class="row">
+	<div>
+		<div class="panel panel-info">
+					<!-- Default panel contents -->
+					<div class="panel-heading">Validated ledgers</div>
+					<!-- Table -->
+					<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Ledger#</th>
+									<th>Txns</th>
+									<th>Time</th>
+									<th>Destroy</th>
+									<th>Hash</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="ledger in ledgers">
+									<td ng-bind="ledger.ledger_index"></td>
+									<td ng-bind="ledger.transactions.length"></td>
+									<td ng-bind="ledger.time"></td>
+									<td ng-bind="ledger.destroy/1000000"></td>
+									<td ng-bind="ledger.account_hash"></td>
+								</tr>
+							
+							</tbody>
+					</table>
+		</div>
+	</div>
+</div>
